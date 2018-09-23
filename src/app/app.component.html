@@ -18,3 +18,14 @@
   </li>
 </ul>
 
+<ul>
+  <li class="text" *ngFor="let task of tasks | async">
+    {{task.description}}
+  </li>
+</ul>
+
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <input formControlName="description" placeholder="Todo Item">
+  <button type="submit">Send</button>
+</form>
+
