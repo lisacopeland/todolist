@@ -1,8 +1,11 @@
-import { Task } from './todolist.model';
+import { TaskItem, TaskItemId } from './todolist.model';
 import { Injectable } from '@angular/core';
-
-import { AngularFirestore } from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 // import { AngularFireModule } from '@angular/fire';
 // import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -15,18 +18,37 @@ export const config = {
 };
 
 @Injectable()
-export class ProductService {
-  tasks: Observable<any[]>;
-  // tasks: AngularFirestore<Task>;
-  // private taskDoc: AngularFirestoreDocument<Task>;
+export class TaskService {
+  private taskCollection: AngularFirestoreCollection<TaskItem>;
+  tasks: Observable<TaskItemId[]>;
 
-  constructor(private db: AngularFirestore) {
-    // this.tasks = db.collection('tasks').valueChanges();
+  constructor(private angularFirestore: AngularFirestore) {
+    this.taskCollection = this.angularFirestore.collection<TaskItem>('tasks');
+  }
 
- }
+  getTaskItems(): Observable<TaskItem[]> {
+    return this.taskCollection.snapshotChanges().pipe(
+      map(actions =>
+        actions.map(a => {
+          const data = a.payload.doc.data() as TaskItem;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        })
+      )
+    );
+  }
 
- addTask(task) {
-  // this.tasks.add(task);
+  addTaskItem(description: string) {
+    const taskItem: TaskItem = { description: description, finished: 'false' };
+    this.taskCollection.add(taskItem);
+  }
+
+  deleteTaskItem(taskItem) {
+    this.taskCollection.doc(taskItem.id).delete();
+  }
+
+  updateTaskItem(taskItem) {
+    this.taskCollection.doc(taskItem.id).update({ finished: 'true' });
   }
 
 }
