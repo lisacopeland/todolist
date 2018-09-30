@@ -13,7 +13,7 @@ import { TaskService } from './todolist.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'app';
+  title = 'todolist';
   myForm: FormGroup;
   signupForm: FormGroup;
   signinForm: FormGroup;
