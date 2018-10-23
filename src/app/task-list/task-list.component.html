@@ -1,0 +1,14 @@
+
+<ul>
+  <li class="text" *ngFor="let task of tasks | async">
+    {{task.description}}
+    <button type="button" (click)="onDelete(task)">Delete</button>
+    <button type="button" (click)="updateItem(task)">Finish</button>
+  </li>
+</ul>
+
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <div>Add an Item:</div>
+  <input formControlName="description" placeholder="Todo Item">
+  <button type="submit">Send</button>
+</form>

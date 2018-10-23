@@ -1,4 +1,4 @@
-import { TaskItem, TaskItemId } from './todolist.model';
+import { TaskItem, TaskItemId } from '../models/todolist.model';
 import { Injectable } from '@angular/core';
 import {
   AngularFirestore,

@@ -1,37 +1,3 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-</div>
-
-<form [formGroup]="signupForm" (ngSubmit)="onSignup()">
-    <div>SignUp:</div>
-    <input formControlName="email" placeholder="Email">
-    <input formControlName="password" placeholder="Password">
-    <button type="submit">Submit</button>
-</form>
-
-<form [formGroup]="signinForm" (ngSubmit)="onSignin()">
-    <div>SignIn:</div>
-    <input formControlName="email" placeholder="Email">
-    <input formControlName="password" placeholder="Password">
-    <button type="submit">Submit</button>
-</form>
-
-<button (click)="onLogout()" [disabled]="!loggedIn">Logout</button>
-
-<ul>
-  <li class="text" *ngFor="let task of tasks | async">
-    {{task.description}}
-    <button type="button" (click)="onDelete(task)">Delete</button>
-    <button type="button" (click)="updateItem(task)">Finish</button>
-  </li>
-</ul>
-
-<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-  <div>Add an Item:</div>
-  <input formControlName="description" placeholder="Todo Item">
-  <button type="submit">Send</button>
-</form>
+<app-header></app-header>
+<router-outlet></router-outlet>
 

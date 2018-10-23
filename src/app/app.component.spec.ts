@@ -2,8 +2,8 @@ import { TestBed, async } from '@angular/core/testing';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FormGroup, FormControl } from '@angular/forms';
-import { AuthService } from './auth.service';
-import { TaskItem, TaskItemId } from './todolist.model';
+import { AuthService } from './services/auth.service';
+import { TaskItem, TaskItemId } from './models/todolist.model';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
@@ -18,7 +18,7 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 
-import { TaskService } from './todolist.service';
+import { TaskService } from './services/todolist.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {

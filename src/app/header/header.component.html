@@ -1,0 +1,10 @@
+<div class="header">
+    <div class="header-text">The Todo List</div>
+    <div *ngIf="userEmail" class="header-text">Hi {{ userEmail }} </div>
+    <button class="user-button" mat-button [matMenuTriggerFor]="menu">User</button>
+</div>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item routerLink="/signup" routerLinkActive="router-link-active" >Sign Up</button>
+  <button mat-menu-item routerLink="/login">Login</button>
+  <button mat-menu-item (click)="onLogout()">Logout</button>
+</mat-menu>
