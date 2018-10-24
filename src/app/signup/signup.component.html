@@ -1,6 +1,13 @@
-<form [formGroup]="signupForm" (ngSubmit)="onSignup()">
-  <div>SignUp:</div>
-  <input formControlName="email" placeholder="Email">
-  <input formControlName="password" placeholder="Password">
-  <button type="submit">Submit</button>
-</form>
+<mat-card class="signup">
+  <form [formGroup]="signupForm" class="signup-form" (ngSubmit)="onSignup()">
+    <div>Sign Up</div>
+    <mat-form-field>
+      <input matInput formControlName="email" placeholder="Email">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="password" placeholder="password">
+    </mat-form-field>
+
+    <button mat-button type="submit">Submit</button>
+  </form>
+</mat-card>

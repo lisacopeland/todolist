@@ -7,12 +7,6 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-// import { AngularFireModule } from '@angular/fire';
-// import { AngularFirestoreModule } from '@angular/fire/firestore';
-// import { AngularFireStorageModule } from '@angular/fire/storage';
-// import { AngularFireAuthModule } from '@angular/fire/auth';
-
-
 export const config = {
   collection_endpoint: 'tasks'
 };
@@ -47,8 +41,9 @@ export class TaskService {
     this.taskCollection.doc(taskItem.id).delete();
   }
 
-  updateTaskItem(taskItem) {
-    this.taskCollection.doc(taskItem.id).update({ finished: 'true' });
+  updateTaskItemStatus(taskItem, status) {
+    console.log('status is ' + status);
+    this.taskCollection.doc(taskItem.id).update({ finished: status });
   }
 
 }

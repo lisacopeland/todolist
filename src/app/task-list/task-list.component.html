@@ -1,14 +1,34 @@
+<mat-card class="task-list-card">
+  <div class="title-text">
+    Todo List
+  </div>
+  <button
+    (click)="onAdd()"
+    mat-icon-button
+    type="button">
+    <mat-icon>add</mat-icon>
+  </button>
+  <div class="task-list">
+    <div class="task-list-item" *ngFor="let task of tasks | async">
+      <button mat-icon-button type="button" (click)="onDelete(task)" color="primary">
+        <mat-icon >delete</mat-icon>
+      </button>
+      <button mat-icon-button type="button" (click)="onEdit(task)" color="primary">
+        <mat-icon >edit</mat-icon>
+      </button>
+      <button mat-icon-button type="button" (click)="updateStatus(task)" color="primary">
+        <mat-icon *ngIf="task.finished === 'false'">check</mat-icon>
+        <mat-icon *ngIf="task.finished === 'true'">undo</mat-icon>
+      </button>
+      {{task.description}} is {{ task.finished }}
+    </div>
+  </div>
 
-<ul>
-  <li class="text" *ngFor="let task of tasks | async">
-    {{task.description}}
-    <button type="button" (click)="onDelete(task)">Delete</button>
-    <button type="button" (click)="updateItem(task)">Finish</button>
-  </li>
-</ul>
-
-<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-  <div>Add an Item:</div>
-  <input formControlName="description" placeholder="Todo Item">
-  <button type="submit">Send</button>
-</form>
+  <form [formGroup]="myForm" class="task-item-form" (ngSubmit)="onSubmit()">
+    <div>Add an Item:</div>
+    <mat-form-field>
+      <input matInput formControlName="description" placeholder="Todo Item">
+    </mat-form-field>
+    <button mat-button type="submit">Send</button>
+  </form>
+</mat-card>

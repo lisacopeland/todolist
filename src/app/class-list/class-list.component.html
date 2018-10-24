@@ -1,0 +1,23 @@
+<mat-card class="classroom-list-card">
+  <div class="title-text">
+    Classroom List
+  </div>
+  <button
+    (click)="onAdd()"
+    mat-icon-button
+    type="button">
+    <mat-icon>add</mat-icon>
+  </button>
+  <div class="classroom-list">
+    <div class="classroom-list-item" *ngFor="let classroom of classrooms | async">
+      <button mat-icon-button type="button" (click)="onDelete(classroom)" color="primary">
+        <mat-icon >delete</mat-icon>
+      </button>
+      <button mat-icon-button type="button" (click)="onEdit(classroom)" color="primary">
+        <mat-icon >edit</mat-icon>
+      </button>
+      {{classroom.name}} - {{ classroom.description }} {{ classroom.teacher }}
+    </div>
+  </div>
+
+</mat-card>

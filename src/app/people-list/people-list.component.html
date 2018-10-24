@@ -1,0 +1,23 @@
+<mat-card class="person-list-card">
+  <div class="title-text">
+    Person List
+  </div>
+  <button
+    (click)="onAdd()"
+    mat-icon-button
+    type="button">
+    <mat-icon>add</mat-icon>
+  </button>
+  <div class="person-list">
+    <div class="person-list-item" *ngFor="let person of people | async">
+      <button mat-icon-button type="button" (click)="onDelete(person)" color="primary">
+        <mat-icon >delete</mat-icon>
+      </button>
+      <button mat-icon-button type="button" (click)="onEdit(person)" color="primary">
+        <mat-icon >edit</mat-icon>
+      </button>
+      {{person.email}} - {{ person.firstName }} {{ person.lastName }}
+    </div>
+  </div>
+
+ </mat-card>

@@ -5,6 +5,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatMenuModule } from '@angular/material/menu';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -22,7 +29,12 @@ import { TaskService } from './services/todolist.service';
 import { HeaderComponent } from './header/header.component';
 import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
-import { TaskListComponent } from './task-list/task-list.component';
+import { TaskListComponent, EditTaskItemDialog } from './task-list/task-list.component';
+import {ClassListComponent, EditClassroomDialog} from './class-list/class-list.component';
+import { EditPersonDialog, PeopleListComponent } from './people-list/people-list.component';
+import { ClassroomService } from './services/classroom.service';
+import { PeopleService } from './services/person.service';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +43,12 @@ import { TaskListComponent } from './task-list/task-list.component';
     HeaderComponent,
     SignupComponent,
     HomeComponent,
-    TaskListComponent
+    TaskListComponent,
+    EditTaskItemDialog,
+    ClassListComponent,
+    EditClassroomDialog,
+    PeopleListComponent,
+    EditPersonDialog
   ],
   imports: [
     BrowserModule,
@@ -43,11 +60,25 @@ import { TaskListComponent } from './task-list/task-list.component';
     AngularFireAuthModule,
     AngularFireStorageModule,
     AppRoutingModule,
-    MatMenuModule
+    MatButtonModule,
+    MatCardModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatMenuModule,
+    MatSelectModule
   ],
   providers: [
     AuthService,
-    TaskService
+    TaskService,
+    ClassroomService,
+    PeopleService
+  ],
+  entryComponents: [
+    EditTaskItemDialog,
+    EditPersonDialog,
+    EditClassroomDialog
   ],
   bootstrap: [AppComponent]
 })

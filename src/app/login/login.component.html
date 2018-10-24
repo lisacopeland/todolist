@@ -1,6 +1,13 @@
-<form [formGroup]="signinForm" (ngSubmit)="onSignin()">
-  <div>SignIn:</div>
-  <input formControlName="email" placeholder="Email">
-  <input formControlName="password" placeholder="Password">
-  <button type="submit">Submit</button>
-</form>
+<mat-card class="login">
+  <form [formGroup]="signinForm" class="login-form" (ngSubmit)="onSignin()">
+    <div>Log In</div>
+    <mat-form-field>
+      <input matInput formControlName="email" placeholder="Email">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="password" placeholder="password">
+    </mat-form-field>
+
+    <button mat-button type="submit">Submit</button>
+  </form>
+</mat-card>

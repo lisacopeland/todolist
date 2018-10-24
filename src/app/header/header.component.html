@@ -1,10 +1,18 @@
 <div class="header">
     <div class="header-text">The Todo List</div>
     <div *ngIf="userEmail" class="header-text">Hi {{ userEmail }} </div>
-    <button class="user-button" mat-button [matMenuTriggerFor]="menu">User</button>
+  <div>
+    <button class="main-menu-item" mat-button [matMenuTriggerFor]="userMenu">User</button>
+    <button class="main-menu-item" mat-button [matMenuTriggerFor]="editItems">Edit Stuff</button>
+  </div>
 </div>
-<mat-menu #menu="matMenu">
+<mat-menu #userMenu="matMenu">
   <button mat-menu-item routerLink="/signup" routerLinkActive="router-link-active" >Sign Up</button>
   <button mat-menu-item routerLink="/login">Login</button>
   <button mat-menu-item (click)="onLogout()">Logout</button>
+</mat-menu>
+<mat-menu #editItems="matMenu">
+  <button mat-menu-item routerLink="/tasklist" routerLinkActive="router-link-active" >Todo List</button>
+  <button mat-menu-item routerLink="/classlist">Class List</button>
+  <button mat-menu-item routerLink="/peoplelist">People List</button>
 </mat-menu>

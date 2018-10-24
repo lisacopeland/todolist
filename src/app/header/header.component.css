@@ -19,6 +19,11 @@
   margin-left: 24px;
 }
 
+.main-menu-item {
+  margin: 0px 10px 0px 10px;
+  color: white;
+}
+
 .user-button {
   width: 100px;
   height: 50px;

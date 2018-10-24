@@ -1,0 +1,11 @@
+.classroom-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.title-line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
