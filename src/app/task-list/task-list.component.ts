@@ -54,10 +54,12 @@ export class TaskListComponent implements OnInit {
 
 }
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'edit-task-item-dialog',
   templateUrl: 'edit-task-item-dialog.html',
   styleUrls: ['./edit-task-item-dialog.css']
 })
+// tslint:disable-next-line:component-class-suffix
 export class EditTaskItemDialog {
 
   constructor(

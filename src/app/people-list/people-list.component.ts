@@ -17,7 +17,7 @@ export class PeopleListComponent implements OnInit {
               private peopleService: PeopleService) { }
 
   ngOnInit() {
-      this.people = this.peopleService.getPeople();
+      this.people = this.peopleService.getPeople('lastName');
   }
 
   onEdit(person) {
@@ -58,13 +58,16 @@ export class PeopleListComponent implements OnInit {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'edit-person-dialog',
   templateUrl: 'edit-person-dialog.html',
   styleUrls: ['./edit-person-dialog.css']
 })
+// tslint:disable-next-line:component-class-suffix
 export class EditPersonDialog implements OnInit {
   personForm: FormGroup;
   addMode;
+  roles: ['student', 'teacher', 'aide'];
 
   constructor(
     public dialogRef: MatDialogRef<EditPersonDialog>,
@@ -83,37 +86,34 @@ export class EditPersonDialog implements OnInit {
         email: new FormControl('', Validators.required),
         firstName: new FormControl('', Validators.required),
         lastName: new FormControl('', Validators.required),
-        phoneNumber: new FormControl('', Validators.required)
+        phoneNumber: new FormControl('', Validators.required),
+        role: new FormControl('', Validators.required)
       });
     } else {
       this.personForm = new FormGroup({
         email: new FormControl(this.data.email, Validators.required),
         firstName: new FormControl(this.data.firstName, Validators.required),
         lastName: new FormControl(this.data.lastName, Validators.required),
-        phoneNumber: new FormControl(this.data.phoneNumber, Validators.required)
+        phoneNumber: new FormControl(this.data.phoneNumber, Validators.required),
+        role: new FormControl(this.data.role, Validators.required)
       });
     }
   }
 
   onSave() {
 
-    let newPerson;
-    if (this.addMode) {
+    let newPerson: Person;
       newPerson = {
         email: this.personForm.value.email,
         firstName: this.personForm.value.firstName,
         lastName: this.personForm.value.lastName,
-        phoneNumber: this.personForm.value.phoneNumber
+        phoneNumber: this.personForm.value.phoneNumber,
+        role: this.personForm.value.role
       };
-    } else {
-      newPerson = {
-        id: this.data.id,
-        email: this.personForm.value.email,
-        firstName: this.personForm.value.firstName,
-        lastName: this.personForm.value.lastName,
-        phoneNumber: this.personForm.value.phoneNumber
-      };
-    }
+      if (!this.addMode) {
+        Object.assign(newPerson, { id: this.data.id });
+      }
+
     this.dialogRef.close(newPerson);
   }
 

@@ -3,6 +3,7 @@ export interface Person {
   firstName: string;
   lastName: string;
   phoneNumber: string;
+  role: string; // Can be 'student', 'teacher'
 }
 export interface PersonId extends Person {
   id: string;

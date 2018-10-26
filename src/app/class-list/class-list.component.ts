@@ -5,8 +5,15 @@ import { ClassroomService } from '../services/classroom.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {EditPersonDialog} from '../people-list/people-list.component';
-import {Person} from '../models/person.model';
+import {Person, PersonId} from '../models/person.model';
 import {PeopleService} from '../services/person.service';
+import {AngularFirestoreDocument, AngularFirestoreCollection} from '@angular/fire/firestore';
+
+interface ClassDisplay {
+  name: string;
+  description: string;
+  teacherEmail: string;
+}
 
 @Component({
   selector: 'app-class-list',
@@ -16,12 +23,34 @@ import {PeopleService} from '../services/person.service';
 export class ClassListComponent implements OnInit {
 
   classrooms: Observable<Classroom[]>;
+  onReady = false;
+  classroomArray: any[];
 
   constructor(public dialog: MatDialog,
+              private peopleService: PeopleService,
               private classroomService: ClassroomService) { }
 
   ngOnInit() {
-    this.classrooms = this.classroomService.getClassrooms();
+    this.classroomService.getClassrooms()
+      .subscribe(classrooms => {
+        this.classroomArray = classrooms.map(x => {
+          return this.getClassroomData(x);
+        });
+      console.log('classroomarray = ' + this.classroomArray);
+      this.onReady = true;
+      });
+  }
+
+  getClassroomData(classroom) {
+    console.log('Going to do getPerson, teacher Id is ' + classroom.teacher);
+    this.peopleService.getPerson(classroom.teacher).subscribe(teacher => {
+      console.log(teacher);
+      return {
+        className: classroom.name,
+        classDescription: classroom.description,
+        teacherEmail: teacher[0].email
+      };
+    });
   }
 
   onEdit(classroom) {
@@ -62,13 +91,17 @@ export class ClassListComponent implements OnInit {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'edit-classroom-dialog',
   templateUrl: 'edit-classroom-dialog.html',
   styleUrls: ['./edit-classroom-dialog.css']
 })
+// tslint:disable-next-line:component-class-suffix
 export class EditClassroomDialog implements OnInit {
   classroomForm: FormGroup;
-  people: Observable<Person[]>;
+  people: PersonId[];
+  onReady = false;
+  currentTeacherName = '';
   addMode;
   grades = [
     'ninth',
@@ -85,18 +118,34 @@ export class EditClassroomDialog implements OnInit {
   ngOnInit() {
     console.log('data is ' + JSON.stringify(this.data));
     this.addMode = !(this.data);
-    this.people = this.peopleService.getPeople();
-    this.initForm();
+    this.peopleService.getPeople('email').subscribe(
+        people => {
+          console.log(people);
+          this.people = people;
+          this.initForm();
+          this.onReady = true;
+          });
+
   }
 
   initForm() {
+    if (!this.addMode) {
+      console.log('Going to do getPerson, teacher Id is ' + this.data.teacher);
+      this.peopleService.getPerson(this.data.teacher).subscribe(teacher => {
+        console.log(teacher);
+        this.currentTeacherName = teacher[0].email;
+        console.log('current teacher name is ' + this.currentTeacherName);
+      });
+    }
+
     console.log('addmode is ' + this.addMode);
+    // console.log('going to default teacher to ' + this.people[0].id);
     if (this.addMode) {
       this.classroomForm = new FormGroup({
         name: new FormControl('', Validators.required),
         description: new FormControl('', Validators.required),
         gradeLevel: new FormControl('', Validators.required),
-        teacher: new FormControl('', Validators.required)
+        teacher: new FormControl(this.people[0].id, Validators.required)
       });
     } else {
       this.classroomForm = new FormGroup({

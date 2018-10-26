@@ -8,15 +8,15 @@
     type="button">
     <mat-icon>add</mat-icon>
   </button>
-  <div class="classroom-list">
-    <div class="classroom-list-item" *ngFor="let classroom of classrooms | async">
-      <button mat-icon-button type="button" (click)="onDelete(classroom)" color="primary">
+  <div *ngIf="onReady" class="classroom-list">
+    <div class="classroom-list-item" *ngFor="let classroom of classroomArray">
+      <!-- <button mat-icon-button type="button" (click)="onDelete(classroom)" color="primary">
         <mat-icon >delete</mat-icon>
       </button>
       <button mat-icon-button type="button" (click)="onEdit(classroom)" color="primary">
         <mat-icon >edit</mat-icon>
-      </button>
-      {{classroom.name}} - {{ classroom.description }} {{ classroom.teacher }}
+      </button> -->
+      {{classroom.className}} - {{ classroom.classDescription }} {{ classroom.teacherEmail }}
     </div>
   </div>
 

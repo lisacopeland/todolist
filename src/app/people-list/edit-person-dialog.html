@@ -18,6 +18,13 @@
   <mat-form-field>
     <input matInput formControlName="phoneNumber" placeholder="Phone Number">
   </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Role" formControlName="role">
+      <mat-option *ngFor="let role of roles" [value]="role">
+        {{role}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <mat-dialog-actions>
     <button mat-button type="submit">Save</button>
     <button mat-button type="button" (click)=onCancel()>Cancel</button>

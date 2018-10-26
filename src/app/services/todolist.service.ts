@@ -14,7 +14,6 @@ export const config = {
 @Injectable()
 export class TaskService {
   private taskCollection: AngularFirestoreCollection<TaskItem>;
-  tasks: Observable<TaskItemId[]>;
 
   constructor(private angularFirestore: AngularFirestore) {
     this.taskCollection = this.angularFirestore.collection<TaskItem>('tasks');
