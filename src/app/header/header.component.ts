@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../auth/auth.service';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -17,10 +17,14 @@ export class HeaderComponent implements OnInit {
     private authService: AuthService) { }
 
   ngOnInit() {
+    if (this.authService.isLoggedIn()) {
+      this.userEmail = this.authService.getCurrentUserEmail();
+      this.router.navigate(['/tasklist']);
+    }
     this.userChanged = this.authService.userChanged.subscribe(
       (email: string) => {
         console.log('user is now ' + email);
-        this.loggedIn = (email) ? true : false;
+        this.loggedIn = this.authService.isLoggedIn();
         if (this.loggedIn) {
           this.userEmail = email;
           this.router.navigate(['/tasklist']);

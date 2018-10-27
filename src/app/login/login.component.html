@@ -2,12 +2,32 @@
   <form [formGroup]="signinForm" class="login-form" (ngSubmit)="onSignin()">
     <div>Log In</div>
     <mat-form-field>
-      <input matInput formControlName="email" placeholder="Email">
+      <input
+        matInput
+        type="email"
+        formControlName="email"
+        placeholder="Email">
     </mat-form-field>
     <mat-form-field>
-      <input matInput formControlName="password" placeholder="password">
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+        placeholder="password">
     </mat-form-field>
-
-    <button mat-button type="submit">Submit</button>
+    <button
+      mat-button
+      type="submit"
+    >Submit</button>
   </form>
+  <button
+    mat-button
+    type="button"
+    color="primary"
+    (click)="onFacebookLogin()">Login with Facebook</button>
+  <button
+    mat-button
+    type="button"
+    color="accent"
+    (click)="onGoogleLogin()">Login with Google</button>
 </mat-card>

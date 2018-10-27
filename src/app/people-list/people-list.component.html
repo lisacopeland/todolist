@@ -2,12 +2,33 @@
   <div class="title-text">
     Person List
   </div>
-  <button
-    (click)="onAdd()"
-    mat-icon-button
-    type="button">
-    <mat-icon>add</mat-icon>
-  </button>
+  <div class="control-row">
+    <button
+      (click)="onAdd()"
+      mat-icon-button
+      type="button">
+      <mat-icon>add</mat-icon>
+    </button>
+    <div>
+      <mat-form-field class="control-item">
+        <mat-select
+          placeholder="Filter on Role"
+          (selectionChange)="onFilter($event)">
+          <mat-option *ngFor="let role of roles" [value]="role">
+            {{ role }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          (keyup)="searchTerm$.next($event.target.value)"
+          matInput
+          placeholder="Search"
+          type="text">
+        <span matSuffix><mat-icon>search</mat-icon></span>
+      </mat-form-field>
+    </div>
+  </div>
   <div class="person-list">
     <div class="person-list-item" *ngFor="let person of people | async">
       <button mat-icon-button type="button" (click)="onDelete(person)" color="primary">

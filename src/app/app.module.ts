@@ -24,7 +24,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 
-import { AuthService } from './services/auth.service';
+import { AuthService } from './auth/auth.service';
+import { AuthGuard } from './auth/auth-guard.service';
 import { TaskService } from './services/todolist.service';
 import { HeaderComponent } from './header/header.component';
 import { SignupComponent } from './signup/signup.component';
@@ -71,6 +72,7 @@ import { PeopleService } from './services/person.service';
   ],
   providers: [
     AuthService,
+    AuthGuard,
     TaskService,
     ClassroomService,
     PeopleService

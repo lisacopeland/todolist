@@ -23,7 +23,6 @@ interface ClassDisplay {
 export class ClassListComponent implements OnInit {
 
   classrooms: Observable<Classroom[]>;
-  onReady = false;
   classroomArray: any[];
 
   constructor(public dialog: MatDialog,
@@ -31,14 +30,7 @@ export class ClassListComponent implements OnInit {
               private classroomService: ClassroomService) { }
 
   ngOnInit() {
-    this.classroomService.getClassrooms()
-      .subscribe(classrooms => {
-        this.classroomArray = classrooms.map(x => {
-          return this.getClassroomData(x);
-        });
-      console.log('classroomarray = ' + this.classroomArray);
-      this.onReady = true;
-      });
+    this.classrooms = this.classroomService.getClassrooms();
   }
 
   getClassroomData(classroom) {
@@ -118,7 +110,7 @@ export class EditClassroomDialog implements OnInit {
   ngOnInit() {
     console.log('data is ' + JSON.stringify(this.data));
     this.addMode = !(this.data);
-    this.peopleService.getPeople('email').subscribe(
+    this.peopleService.getPeople('email', 'teacher').subscribe(
         people => {
           console.log(people);
           this.people = people;

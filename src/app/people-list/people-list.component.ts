@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {Person, PersonId} from '../models/person.model';
 import { PeopleService } from '../services/person.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-people-list',
@@ -12,12 +13,27 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class PeopleListComponent implements OnInit {
   people: Observable<Person[]>;
+  roles = ['all', 'student', 'teacher', 'aide'];
 
   constructor(public dialog: MatDialog,
               private peopleService: PeopleService) { }
 
   ngOnInit() {
-      this.people = this.peopleService.getPeople('lastName');
+      this.getPeople();
+  }
+
+  getPeople(role?) {
+    this.people = this.peopleService.getPeople('lastName', role);
+  }
+
+  onFilter($event) {
+    console.log('filter selected ' + $event.value);
+    if ($event.value !== 'all') {
+      this.getPeople($event.value);
+    } else {
+      this.getPeople();
+    }
+
   }
 
   onEdit(person) {
@@ -67,7 +83,7 @@ export class PeopleListComponent implements OnInit {
 export class EditPersonDialog implements OnInit {
   personForm: FormGroup;
   addMode;
-  roles: ['student', 'teacher', 'aide'];
+  roles = ['student', 'teacher', 'aide'];
 
   constructor(
     public dialogRef: MatDialogRef<EditPersonDialog>,
@@ -75,6 +91,7 @@ export class EditPersonDialog implements OnInit {
 
   ngOnInit() {
     console.log('data is ' + JSON.stringify(this.data));
+    console.log('this.roles is ' + this.roles);
     this.addMode = !(this.data);
     this.initForm();
   }
@@ -87,7 +104,7 @@ export class EditPersonDialog implements OnInit {
         firstName: new FormControl('', Validators.required),
         lastName: new FormControl('', Validators.required),
         phoneNumber: new FormControl('', Validators.required),
-        role: new FormControl('', Validators.required)
+        role: new FormControl('student', Validators.required)
       });
     } else {
       this.personForm = new FormGroup({
@@ -98,6 +115,14 @@ export class EditPersonDialog implements OnInit {
         role: new FormControl(this.data.role, Validators.required)
       });
     }
+    this.onChanges();
+    console.log('personForm ' + this.personForm);
+  }
+
+  onChanges(): void {
+    this.personForm.get('role').valueChanges.subscribe(val => {
+        console.log('on change, val is now ' + val);
+    });
   }
 
   onSave() {

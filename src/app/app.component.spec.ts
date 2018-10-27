@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FormGroup, FormControl } from '@angular/forms';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './auth/auth.service';
 import { TaskItem, TaskItemId } from './models/todolist.model';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';

@@ -23,30 +23,33 @@ export class PeopleService {
         .collection<Person>('people');
   }
 
-  getPeople(sortBy): Observable<PersonId[]> {
-    const thisCollection = this.angularFirestore
+  getPeople(sortBy, userRole): Observable<PersonId[]> {
+
+    let thisCollection: AngularFirestoreCollection<Person>;
+    if (userRole) {
+      thisCollection = this.angularFirestore
+        .collection<Person>('people', ref => ref.orderBy(sortBy).where('role', '==', userRole));
+    } else {
+      thisCollection = this.angularFirestore
         .collection<Person>('people', ref => ref.orderBy(sortBy));
-    return this.peopleCollection.snapshotChanges().pipe(
-      map(actions =>
-        actions.map(a => {
-          const data = a.payload.doc.data() as Person;
-          const id = a.payload.doc.id;
-          return { id, ...data };
-        })
+    }
+    return thisCollection.snapshotChanges().pipe(
+      map(actions => {
+          return actions.map(a => {
+            const data = a.payload.doc.data() as Person;
+            const id = a.payload.doc.id;
+            return {id, ...data};
+          });
+        }
       )
     );
   }
 
-  getPerson(id, role = 'all'): Observable<any> {
+  getPerson(id): Observable<any> {
     console.log('hi from getperson, id = ' + id);
-    if (role !== 'all') {
-
-    } else {
-      thisCollection =
+    const thisCollection =
       this.angularFirestore
       .collection('people', ref => ref.where('id', '==', id));
-
-    }
 
      return thisCollection.snapshotChanges().pipe(
           map(actions =>

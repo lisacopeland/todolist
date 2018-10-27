@@ -8,3 +8,9 @@
 .title-text {
   margin: 10px;
 }
+
+.control-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

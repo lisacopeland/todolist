@@ -8,14 +8,16 @@ import { TaskListComponent } from './task-list/task-list.component';
 import { ClassListComponent } from './class-list/class-list.component';
 import { PeopleListComponent } from './people-list/people-list.component';
 
+import { AuthGuard } from './auth/auth-guard.service';
+
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'tasklist', component: TaskListComponent },
-  { path: 'classlist', component: ClassListComponent },
-  { path: 'peoplelist', component: PeopleListComponent }
+  { path: 'tasklist', component: TaskListComponent, canActivate: [AuthGuard] },
+  { path: 'classlist', component: ClassListComponent, canActivate: [AuthGuard] },
+  { path: 'peoplelist', component: PeopleListComponent, canActivate: [AuthGuard] }
 ];
 
 /**
