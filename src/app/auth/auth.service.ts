@@ -13,7 +13,7 @@ export class AuthService {
   userChanged = new Subject<string>();
 
   constructor(private firebaseAuth: AngularFireAuth) {
-    this.user = firebaseAuth.authState;
+/*    this.user = firebaseAuth.authState;
     this.user.subscribe(data => {
         console.log(data.email);
         if (data.email) {
@@ -21,7 +21,7 @@ export class AuthService {
           this.userChanged.next(data.email);
           this.isAuthenticated = true;
         }
-    });
+    });*/
   }
 
   getCurrentUserEmail() {
@@ -54,10 +54,21 @@ export class AuthService {
         console.log('Nice, it worked!');
         this.isAuthenticated = true;
         this.userChanged.next(email);
+        this.subscribeToAuthState();
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
       });
+  }
+
+  subscribeToAuthState() {
+    this.firebaseAuth.auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.userChanged.next(user.email);
+        // User is signed in.
+      }
+    });
+
   }
 
   faceBookLogin() {
