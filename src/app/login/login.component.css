@@ -1,11 +1,29 @@
 .login {
-  height: 265px;
+/*  height: 400px; */
   width: 400px;
   margin: 60px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
+}
 
+button.mat-raised-button {
+  width: 200px;
+  margin: 10px 0px;
+  align-self: center;
+}
+
+.send-email-button {
+  width: 100px;
+  height: 36px;
+  color: black;
+  margin-left: 20px;
+  border-radius: 8px;
+  box-shadow: none;
+  background-color: aqua;
 }

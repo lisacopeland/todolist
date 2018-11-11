@@ -10,6 +10,8 @@ import { ValidatePassword } from '../auth/auth.validators';
 })
 export class LoginComponent implements OnInit {
   signinForm: FormGroup;
+  displayResetEmail = false;
+  resetEmail = '';
 
   constructor(private authService: AuthService) { }
 
@@ -26,6 +28,14 @@ export class LoginComponent implements OnInit {
 
   onSignin() {
     this.authService.login(this.signinForm.value.email, this.signinForm.value.password);
+  }
+
+  onDisplayPasswordReset() {
+    this.displayResetEmail = true;
+  }
+
+  onPasswordReset() {
+
   }
 
   onFacebookLogin() {
